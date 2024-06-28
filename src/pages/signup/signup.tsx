@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import userSignup from '../../services/users/userSignup'
-import generateHash from '../../utils/generateHash'
+// import generateHash from '../../utils/generateHash'
 
 function Signup() {
   const [username, setUsername] = useState<string>("")
@@ -9,13 +9,14 @@ function Signup() {
 
   const handleSignup = async (e: any) => {
     e.preventDefault();
-    const newUser = {
+    const userData = {
       name: username,
       email: email,
-      password: generateHash(password)
+      password: password
+      // password: generateHash(password)
     }
 
-    const response = await userSignup(newUser)
+    const response = await userSignup(userData)
     console.log(response)
 
   }

@@ -1,24 +1,18 @@
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
-interface ISignupData {
-  name: string;
+interface ILoginData {
   email: string;
   password: string;
 }
 
 interface IResponse200 {
   token: string;
-  user: {
-    name: string;
-    email: string;
-    role: "admin" | "user";
-  }
 }
 
-async function userSignup(data : ISignupData) : Promise<IResponse200 | string> {
+async function userLogin(data : ILoginData) : Promise<IResponse200 | string> {
   
   try {
-    const response = await fetch(import.meta.env.VITE_URL_ENDPOINT+"/api/users/signup", {
+    const response = await fetch(import.meta.env.VITE_URL_ENDPOINT+"/api/users/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -31,8 +25,9 @@ async function userSignup(data : ISignupData) : Promise<IResponse200 | string> {
     if (result.token) {
       Cookies.set("token", result.token)
 
-      return result.user
+      return "Log in successful";
     }
+
     return result;
 
   } catch (error) {
@@ -41,4 +36,4 @@ async function userSignup(data : ISignupData) : Promise<IResponse200 | string> {
   }
 }
 
-export default userSignup;
+export default userLogin;

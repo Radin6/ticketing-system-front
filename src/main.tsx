@@ -5,14 +5,15 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import App from './App.tsx'
+import Landing from './pages/landing/landing.tsx'
 import Login from './pages/login/login.tsx';
 import Signup from './pages/signup/signup.tsx'
+import Home from './pages/home/home.tsx';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <Landing />,
   },
   {
     path: "/login",
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Signup />
+  },
+  {
+    path: "/home",
+    element: <Home />
   }
 ]);
 
