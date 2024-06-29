@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import Navbar from "../Navbar";
 
 interface IHomeLayout {
-  children: ReactNode
+  children: ReactNode;
 }
 
 const HomeLayout: React.FC<IHomeLayout> = ({children}) => {

@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import userSignup from '../../services/users/userSignup'
 // import generateHash from '../../utils/generateHash'
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
   const [username, setUsername] = useState<string>("")
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
+  const navigate = useNavigate();
 
   const handleSignup = async (e: any) => {
     e.preventDefault();
@@ -18,6 +20,10 @@ function Signup() {
 
     const response = await userSignup(userData)
     console.log(response)
+
+    if (response) {
+      setTimeout(() => navigate("/home"), 1000)
+    }
 
   }
 

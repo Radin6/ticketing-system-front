@@ -8,7 +8,7 @@ function Navbar() {
 
   return (
     <nav className="flex w-full justify-between p-2 bg-slate-300">
-      <div className="border-2 px-2 border-black rounded-full bg-blue-300">
+      <div className="shadow-md shadow-gray-400 border-2 px-2 border-black rounded-full bg-blue-300">
         <FaListCheck className="h-full text-3xl" />
       </div>
       <div>
