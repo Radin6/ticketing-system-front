@@ -23,7 +23,8 @@ async function userLogin(data : ILoginData) : Promise<IResponse200 | string> {
     const result = await response.json();
 
     if (result.token) {
-      Cookies.set("token", result.token)
+      Cookies.remove("token");
+      Cookies.set("token", result.token);
 
       return "Log in successful";
     }

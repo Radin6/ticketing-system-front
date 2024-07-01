@@ -17,7 +17,7 @@ function Signup() {
       password: password
       // password: generateHash(password)
     }
-
+    console.log("enviando: ", userData)
     const response = await userSignup(userData)
     console.log(response)
 

@@ -1,9 +1,10 @@
 import HomeLayout from "../../components/Layout/HomeLayout";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ticketCreate from "../../services/tickets/ticketCreate"
 import { ITicketCreate, TPriority } from '../../types/ticketTypes';
+import getTicketsByMe from "../../services/tickets/getTicketsByMe";
 
 // const CreateTicketModal = () => {
 //   <Modal setShowModal={setShowModal}>
@@ -16,6 +17,18 @@ function Home() {
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
   const [priority, setPriority] = useState<TPriority>("low")
+  const [tickets, setTickets] = useState({})
+
+  // useEffect(() =>{
+  //   const fetchTickets = async () => {
+  //     const response = await getTicketsByMe()
+  //     if (response?.ticket) {
+  //       console.log("tickets response: ", response.ticket)
+  //     }
+  //   }
+
+  //   fetchTickets()
+  // },[])
 
   const handleOpenModal = () => {
     setShowModal(true)
@@ -39,7 +52,7 @@ function Home() {
     <HomeLayout>
       <div className="flex flex-col justify-center items-center h-screen">
         <div className="flex flex-col border rounded-md bg-blue-100 p-6">
-          <h1>This is the home page</h1>
+          {tickets && "There are tickets"}
           <Button onClick={handleOpenModal}>
             Create New Ticket
           </Button>

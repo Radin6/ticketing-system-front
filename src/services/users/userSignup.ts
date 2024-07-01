@@ -26,10 +26,15 @@ async function userSignup(data : ISignupData) : Promise<IResponse200 | string> {
       body: JSON.stringify(data),
     })
 
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
     const result = await response.json();
 
     if (result.token) {
-      Cookies.set("token", result.token)
+      Cookies.remove("token");
+      Cookies.set("token", result.token);
 
       return result.user
     }

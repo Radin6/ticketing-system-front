@@ -5,6 +5,6 @@ export interface ITicketCreate {
   status?: TSatatus;
 }
 
-type TPriority = "low" | "medium" | "high";
+export type TPriority = "low" | "medium" | "high";
 
-type TSatatus = "open" | "closed" | "in-progress";
+export type TSatatus = "open" | "closed" | "in-progress";
