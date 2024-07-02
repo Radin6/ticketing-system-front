@@ -8,9 +8,15 @@ function Navbar() {
   const { user, setUser } = useStoreUser();
   const navigate = useNavigate();
 
+  const handleLogout = () => {
+    userLogout();
+    navigate("/");
+    setUser(null);
+  }
+
   return (
     <nav className="flex w-full justify-between p-2 bg-slate-300">
-      <div className="shadow-md shadow-gray-400 border-2 px-2 border-black rounded-full bg-blue-300">
+      <div className="shadow-md shadow-gray-400 border-2 px-2 border-black rounded-full bg-blue-300 hover:bg-slate-300">
         <FaListCheck onClick={() => { navigate("/") }} className="h-full text-3xl cursor-pointer" />
       </div>
       <div>
@@ -19,11 +25,7 @@ function Navbar() {
             <p className="px-4">{user.email}</p>
             <Button
               className="bg-red-500"
-              onClick={() => {
-                userLogout();
-                navigate("/");
-                setUser(null);
-              }} >
+              onClick={handleLogout} >
               Logout
             </Button>
           </div>

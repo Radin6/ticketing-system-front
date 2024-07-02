@@ -3,6 +3,8 @@ import { useState } from 'react';
 import userLogin from '../../services/users/userLogin';
 import { useNavigate } from "react-router-dom";
 import { useStoreUser } from "../../store/useStoreUser"
+import Input from '../../components/Input';
+import Button from '../../components/Button';
 
 function Login() {
   const [email, setEmail] = useState<string>("")
@@ -31,13 +33,13 @@ function Login() {
 
   return (
     <main className="flex flex-col justify-center items-center h-screen">
-      <div className="flex flex-col border rounded-md bg-blue-100 p-6">
+      <div className="flex flex-col border rounded-md bg-blue-100 p-6 shadow-lg">
         <h1 className="text-xl text-center">Login Page</h1>
         <form className="flex flex-col my-2" onSubmit={handleLogin}>
-          <label htmlFor="email">
+          <label htmlFor="email" className="py-1">
             Email
           </label>
-          <input
+          <Input
             onChange={(e) => setEmail(e.target.value)}
             value={email}
             type="email"
@@ -45,10 +47,10 @@ function Login() {
             className="border"
             required
           />
-          <label htmlFor="password" className="border">
+          <label htmlFor="password" className="py-1">
             Password
           </label>
-          <input
+          <Input
             onChange={(e) => setPassword(e.target.value)}
             value={password}
             type="password"
@@ -56,9 +58,9 @@ function Login() {
             className="border"
             required
           />
-          <button type="submit" className="bg-blue-500 p-3 rounded-md mt-6">
+          <Button type="submit" className="mt-6 mx-auto">
             Login
-          </button>
+          </Button>
         </form>
       </div>
     </main>

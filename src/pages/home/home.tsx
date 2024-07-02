@@ -6,7 +6,9 @@ import ticketCreate from "../../services/tickets/ticketCreate"
 import { ITicketCreate, TPriority } from '../../types/ticketTypes';
 import getTicketsByMe from "../../services/tickets/getTicketsByMe";
 import TicketsTable, { ITicketsTable } from "./_components/TicketsTable";
+import Input from "../../components/Input";
 //import { TicketsMocks } from "../../mocks/TicketsMocks";
+
 // const CreateTicketModal = () => {
 //   <Modal setShowModal={setShowModal}>
 //     <table>1</table>
@@ -51,7 +53,7 @@ function Home() {
     setTitle("")
     setDescription("")
     setPriority("low")
-
+    setShowModal(false);
   }
 
   return (
@@ -65,36 +67,34 @@ function Home() {
           {showModal &&
             <Modal setShowModal={setShowModal}>
               <form className="flex flex-col my-2" onSubmit={handleCreateTicket}>
-                <label htmlFor="title">
+                <label htmlFor="title" className="py-1">
                   Title
                 </label>
-                <input
+                <Input
                   onChange={(e) => setTitle(e.target.value)}
                   value={title}
                   type="text"
                   id="title"
-                  className="border"
                   required
                 />
-                <label htmlFor="description" className="border">
+                <label htmlFor="description" className="py-1">
                   Description
                 </label>
-                <input
+                <textarea
                   onChange={(e) => setDescription(e.target.value)}
                   value={description}
-                  type="text"
                   id="description"
-                  className="border"
+                  className="border px-2 py-1 rounded-md bg-slate-100"
                   required
                 />
-                <label htmlFor="priority" className="border">
+                <label htmlFor="priority" className="py-1">
                   Priority
                 </label>
                 <select
                   onChange={(e) => setPriority(e.target.value)}
                   value={priority}
                   id="priority"
-                  className="border"
+                  className="border px-2 py-1 rounded-md bg-slate-100"
                   required
                 >
                   <option value="">Select an option</option>
@@ -102,9 +102,9 @@ function Home() {
                   <option value="medium">Medium</option>
                   <option value="high">High</option>
                 </select>
-                <button type="submit" className="bg-blue-500 p-3 rounded-md mt-6">
+                <Button type="submit" className="mt-6 mx-auto">
                   Create Ticket
-                </button>
+                </Button>
               </form>
             </Modal>
           }

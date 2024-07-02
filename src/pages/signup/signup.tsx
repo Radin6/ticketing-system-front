@@ -2,6 +2,8 @@ import { useState } from 'react'
 import userSignup from '../../services/users/userSignup'
 // import generateHash from '../../utils/generateHash'
 import { useNavigate } from "react-router-dom";
+import Input from '../../components/Input';
+import Button from '../../components/Button';
 
 function Signup() {
   const [username, setUsername] = useState<string>("")
@@ -29,45 +31,42 @@ function Signup() {
 
   return (
     <main className="flex flex-col justify-center items-center h-screen">
-      <div className="flex flex-col border rounded-md bg-red-100 p-6">
+      <div className="flex flex-col border rounded-md bg-red-100 p-6 shadow-lg">
         <h1 className="text-xl text-center">Signup Page</h1>
         <form className="flex flex-col my-2" onSubmit={handleSignup}>
-          <label htmlFor="username">
+          <label htmlFor="username" className="py-1">
             Username
           </label>
-          <input 
+          <Input 
             onChange={(e) => setUsername(e.target.value)}
             value={username} 
             type="text" 
             id="username" 
-            className="border" 
             required
             />
-          <label htmlFor="email">
+          <label htmlFor="email" className="py-1">
             Email
           </label>
-          <input 
+          <Input 
             onChange={(e) => setEmail(e.target.value)}
             value={email}
             type="email" 
             id="email" 
-            className="border" 
             required
             />
-          <label htmlFor="password" className="border">
+          <label htmlFor="password" className="py-1">
             Password
           </label>
-          <input 
+          <Input 
             onChange={(e) => setPassword(e.target.value)}
             value={password} 
             type="password" 
             id="password" 
-            className="border" 
             required
             />
-          <button type="submit" className="bg-red-500 p-3 rounded-md mt-6">
+          <Button type="submit" className="bg-red-500 mt-6 mx-auto">
             Signup
-          </button>
+          </Button>
         </form>
       </div>
     </main>
