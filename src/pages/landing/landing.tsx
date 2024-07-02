@@ -2,9 +2,11 @@ import Button from "../../components/Button"
 import HomeLayout from "../../components/Layout/HomeLayout";
 import { useNavigate } from "react-router-dom";
 import todoListImg from "../../assets/todo-list.png"
+import { useStoreUser } from "../../store/useStoreUser";
 
 function Landing() {
   const navigate = useNavigate();
+  const { user } = useStoreUser()
 
   return (
     <HomeLayout>
@@ -15,11 +17,20 @@ function Landing() {
         <h1 className="text-xl font-bold">
           Welcome to the best ticketing system page
         </h1>
-        <Button
-          onClick={() => { navigate("/signup") }}
-          className="bg-red-500">
-          Sign up
-        </Button>
+        {user ?
+          <Button
+            onClick={() => { navigate("/home") }}
+          >
+            Tickets Menu
+          </Button>
+        :
+          <Button
+            onClick={() => { navigate("/signup") }}
+            className="bg-red-500">
+            Sign up
+          </Button>
+        }
+
       </div>
     </HomeLayout>
   )

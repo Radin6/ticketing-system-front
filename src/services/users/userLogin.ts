@@ -1,4 +1,5 @@
 import Cookies from "js-cookie";
+import { IUser } from "../../types/userTypes";
 
 interface ILoginData {
   email: string;
@@ -7,10 +8,11 @@ interface ILoginData {
 
 interface IResponse200 {
   token: string;
+  user: IUser
 }
 
 async function userLogin(data : ILoginData) : Promise<IResponse200 | string> {
-  
+
   try {
     const response = await fetch(import.meta.env.VITE_URL_ENDPOINT+"/api/users/login", {
       method: "POST",
@@ -21,8 +23,9 @@ async function userLogin(data : ILoginData) : Promise<IResponse200 | string> {
     })
 
     const result = await response.json();
+    console.log(result)
 
-    if (result.token) {
+    if (result.token && result.user) {
       Cookies.remove("token");
       Cookies.set("token", result.token);
 

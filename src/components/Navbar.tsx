@@ -1,9 +1,11 @@
 import Button from "./Button"
 import { useNavigate } from "react-router-dom";
 import { FaListCheck } from "react-icons/fa6";
-
+import { useStoreUser } from "../store/useStoreUser";
+import userLogout from "../services/users/userLogout";
 
 function Navbar() {
+  const { user, setUser } = useStoreUser();
   const navigate = useNavigate();
 
   return (
@@ -12,9 +14,24 @@ function Navbar() {
         <FaListCheck onClick={() => { navigate("/") }} className="h-full text-3xl cursor-pointer" />
       </div>
       <div>
-        <Button onClick={() => { navigate("/login") }} >
-          Log in
-        </Button>
+        {user ?
+          <div className="flex items-center">
+            <p className="px-4">{user.email}</p>
+            <Button
+              className="bg-red-500"
+              onClick={() => {
+                userLogout();
+                navigate("/");
+                setUser(null);
+              }} >
+              Logout
+            </Button>
+          </div>
+          : <Button onClick={() => { navigate("/login") }} >
+            Log in
+          </Button>
+        }
+
       </div>
     </nav>
   )

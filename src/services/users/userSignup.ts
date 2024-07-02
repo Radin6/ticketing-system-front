@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie';
+import { useStoreUser } from '../../store/useStoreUser';
 
 interface ISignupData {
   name: string;
@@ -16,7 +17,7 @@ interface IResponse200 {
 }
 
 async function userSignup(data : ISignupData) : Promise<IResponse200 | string> {
-  
+  const { setUser } = useStoreUser();
   try {
     const response = await fetch(import.meta.env.VITE_URL_ENDPOINT+"/api/users/signup", {
       method: "POST",
@@ -32,12 +33,12 @@ async function userSignup(data : ISignupData) : Promise<IResponse200 | string> {
 
     const result = await response.json();
 
-    if (result.token) {
+    if (result.token && result.user) {
       Cookies.remove("token");
       Cookies.set("token", result.token);
-
-      return result.user
+      setUser(result.user);
     }
+
     return result;
 
   } catch (error) {

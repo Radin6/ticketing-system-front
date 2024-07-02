@@ -16,27 +16,33 @@ interface TicketsProps {
   tickets: ITicketsTable[];
 }
 
-const thStyle = "border border-gray-300 px-4"
+const thStyle = "border border-gray-500 px-4"
+const tdStyle = "border border-gray-300 px-4"
 
-const TicketsTable: React.FC<TicketsProps> = ({tickets}) => {
+const TicketsTable: React.FC<TicketsProps> = ({ tickets }) => {
   return (
-    <table className="table-auto">
-      <tr>
-        <th className={thStyle}>Created At</th>
-        <th className={thStyle}>Title</th>
-        <th className={thStyle}>Description</th>
-        <th className={thStyle}>Status</th>
-        <th className={thStyle}>Priority</th>
-      </tr>
-      {tickets.map(ticket => 
-        <tr key={ticket.ticketId}>
-          <td>{formatDate(ticket.createdAt)}</td>
-          <td>{ticket.title}</td>
-          <td>{ticket.description}</td>
-          <td>{ticket.status}</td>
-          <td>{ticket.priority}</td>
+    <table className="mb-5">
+      <thead>
+        <tr>
+          <th className={thStyle}>Created At</th>
+          <th className={thStyle}>Title</th>
+          <th className={thStyle}>Description</th>
+          <th className={thStyle}>Status</th>
+          <th className={thStyle}>Priority</th>
         </tr>
-      )}
+      </thead>
+      <tbody>
+        {tickets.map(ticket =>
+          <tr key={ticket.ticketId}>
+            <td className={tdStyle}>{formatDate(ticket.createdAt)}</td>
+            <td className={tdStyle}>{ticket.title}</td>
+            <td className={tdStyle}>{ticket.description}</td>
+            <td className={tdStyle}>{ticket.status}</td>
+            <td className={tdStyle}>{ticket.priority}</td>
+          </tr>
+        )}
+      </tbody>
+
     </table>
   )
 }

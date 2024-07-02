@@ -2,13 +2,13 @@ import { useState } from 'react';
 // import generateHash from '../../utils/generateHash';
 import userLogin from '../../services/users/userLogin';
 import { useNavigate } from "react-router-dom";
-//import {storeUser} from "../../store/storeUser"
+import { useStoreUser } from "../../store/useStoreUser"
 
 function Login() {
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const navigate = useNavigate();
-  //const { user, setUser } = storeUser();
+  const { setUser } = useStoreUser();
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
@@ -19,10 +19,9 @@ function Login() {
     }
 
     const response = await userLogin(userData)
-    // setUser({
-    //   response
-    // })
-    // console.log(response)
+    if (response?.user) {
+      setUser(response.user)
+    }
 
     if (response) {
       setTimeout(() => navigate("/home"), 1000)
