@@ -27,7 +27,10 @@ const router = createBrowserRouter([
     path: "/home",
     element: <Home />
   }
-]);
+],
+{
+  basename: '/ticketing-system-front/'
+});
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
