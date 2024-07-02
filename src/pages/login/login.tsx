@@ -1,6 +1,6 @@
 import { useState } from 'react';
 // import generateHash from '../../utils/generateHash';
-import userLogin ,{IResponse200} from '../../services/users/userLogin';
+import userLogin from '../../services/users/userLogin';
 import { useNavigate } from "react-router-dom";
 import { useStoreUser } from "../../store/useStoreUser"
 

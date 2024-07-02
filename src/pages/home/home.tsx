@@ -17,7 +17,7 @@ function Home() {
   const [showModal, setShowModal] = useState(false);
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
-  const [priority, setPriority] = useState<TPriority>("low")
+  const [priority, setPriority] = useState<TPriority|string>("")
   const [tickets, setTickets] = useState<ITicketsTable[]>([])
 
   useEffect(() => {
