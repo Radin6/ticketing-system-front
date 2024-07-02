@@ -1,6 +1,6 @@
 import { useState } from 'react';
 // import generateHash from '../../utils/generateHash';
-import userLogin from '../../services/users/userLogin';
+import userLogin ,{IResponse200} from '../../services/users/userLogin';
 import { useNavigate } from "react-router-dom";
 import { useStoreUser } from "../../store/useStoreUser"
 
@@ -19,7 +19,7 @@ function Login() {
     }
 
     const response = await userLogin(userData)
-    if (response?.user) {
+    if (typeof response !== "string") {
       setUser(response.user)
     }
 

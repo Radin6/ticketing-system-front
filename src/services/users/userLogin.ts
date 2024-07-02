@@ -6,7 +6,7 @@ interface ILoginData {
   password: string;
 }
 
-interface IResponse200 {
+export interface IResponse200 {
   token: string;
   user: IUser
 }

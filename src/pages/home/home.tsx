@@ -6,7 +6,7 @@ import ticketCreate from "../../services/tickets/ticketCreate"
 import { ITicketCreate, TPriority } from '../../types/ticketTypes';
 import getTicketsByMe from "../../services/tickets/getTicketsByMe";
 import TicketsTable, { ITicketsTable } from "./_components/TicketsTable";
-import { TicketsMocks } from "../../mocks/TicketsMocks";
+//import { TicketsMocks } from "../../mocks/TicketsMocks";
 // const CreateTicketModal = () => {
 //   <Modal setShowModal={setShowModal}>
 //     <table>1</table>
@@ -22,12 +22,12 @@ function Home() {
 
   useEffect(() => {
     const fetchTickets = async () => {
-      //const response = await getTicketsByMe()
-      setTickets(TicketsMocks)
-      // if (response?.ticket) {
-      //   console.log(response.ticket)
-      //   setTickets(response.ticket)
-      // }
+      const response = await getTicketsByMe()
+      // setTickets(TicketsMocks)
+      if (response?.ticket) {
+        console.log(response.ticket)
+        setTickets(response.ticket)
+      }
     }
 
     fetchTickets()
