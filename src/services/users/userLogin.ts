@@ -26,7 +26,6 @@ async function userLogin(data : ILoginData) : Promise<IResponse200 | string> {
       Cookies.remove("token");
       Cookies.set("token", result.token);
 
-      return "Log in successful";
     }
 
     return result;

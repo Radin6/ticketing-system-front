@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import ticketCreate from "../../services/tickets/ticketCreate"
 import { ITicketCreate, TPriority } from '../../types/ticketTypes';
 import getTicketsByMe from "../../services/tickets/getTicketsByMe";
-
+import TicketsTable, { ITicketsTable } from "./_components/TicketsTable";
+import { TicketsMocks } from "../../mocks/TicketsMocks";
 // const CreateTicketModal = () => {
 //   <Modal setShowModal={setShowModal}>
 //     <table>1</table>
@@ -17,18 +18,20 @@ function Home() {
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
   const [priority, setPriority] = useState<TPriority>("low")
-  const [tickets, setTickets] = useState({})
+  const [tickets, setTickets] = useState<ITicketsTable[]>([])
 
-  // useEffect(() =>{
-  //   const fetchTickets = async () => {
-  //     const response = await getTicketsByMe()
-  //     if (response?.ticket) {
-  //       console.log("tickets response: ", response.ticket)
-  //     }
-  //   }
+  useEffect(() => {
+    const fetchTickets = async () => {
+      //const response = await getTicketsByMe()
+      setTickets(TicketsMocks)
+      // if (response?.ticket) {
+      //   console.log(response.ticket)
+      //   setTickets(response.ticket)
+      // }
+    }
 
-  //   fetchTickets()
-  // },[])
+    fetchTickets()
+  }, [])
 
   const handleOpenModal = () => {
     setShowModal(true)
@@ -36,7 +39,7 @@ function Home() {
 
   const handleCreateTicket = async (e: any) => {
     e.preventDefault();
-    const ticketData : ITicketCreate = {
+    const ticketData: ITicketCreate = {
       title: title,
       description: description,
       priority: priority
@@ -44,15 +47,18 @@ function Home() {
 
     const response = await ticketCreate(ticketData)
 
-    console.log("creating ticket: ",response)
-    
+    console.log("creating ticket: ", response)
+    setTitle("")
+    setDescription("")
+    setPriority("low")
+
   }
 
   return (
     <HomeLayout>
       <div className="flex flex-col justify-center items-center h-screen">
         <div className="flex flex-col border rounded-md bg-blue-100 p-6">
-          {tickets && "There are tickets"}
+          {tickets?.length && <TicketsTable tickets={tickets} />}
           <Button onClick={handleOpenModal}>
             Create New Ticket
           </Button>
