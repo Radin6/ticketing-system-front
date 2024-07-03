@@ -7,6 +7,7 @@ import { ITicketCreate, TPriority } from '../../types/ticketTypes';
 import getTicketsByMe from "../../services/tickets/getTicketsByMe";
 import TicketsTable, { ITicketsTable } from "./_components/TicketsTable";
 import Input from "../../components/Input";
+import Loading from "../../components/Loading";
 //import { TicketsMocks } from "../../mocks/TicketsMocks";
 
 // const CreateTicketModal = () => {
@@ -21,6 +22,7 @@ function Home() {
   const [description, setDescription] = useState("")
   const [priority, setPriority] = useState<TPriority|string>("")
   const [tickets, setTickets] = useState<ITicketsTable[]>([])
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   useEffect(() => {
     const fetchTickets = async () => {
@@ -33,13 +35,14 @@ function Home() {
     }
 
     fetchTickets()
-  }, [])
+  }, [setTickets])
 
   const handleOpenModal = () => {
     setShowModal(true)
   }
 
   const handleCreateTicket = async (e: any) => {
+    setIsLoading(true)
     e.preventDefault();
     const ticketData: ITicketCreate = {
       title: title,
@@ -54,13 +57,17 @@ function Home() {
     setDescription("")
     setPriority("low")
     setShowModal(false);
+    setIsLoading(false);
   }
 
   return (
     <HomeLayout>
       <div className="flex flex-col justify-center items-center h-screen">
-        <div className="flex flex-col border rounded-md bg-blue-100 p-6">
-          {tickets?.length && <TicketsTable tickets={tickets} />}
+        <div className="flex flex-col border rounded-md bg-blue-100 p-6 m-4 max-w-full">
+          {tickets?.length 
+            ? <TicketsTable tickets={tickets} /> 
+            : <Loading className="w-[300px] h-[150px]" />
+          }
           <Button onClick={handleOpenModal}>
             Create New Ticket
           </Button>
@@ -102,8 +109,8 @@ function Home() {
                   <option value="medium">Medium</option>
                   <option value="high">High</option>
                 </select>
-                <Button type="submit" className="mt-6 mx-auto">
-                  Create Ticket
+                <Button type="submit" className="mt-6 mx-auto" disabled={isLoading}>
+                  {isLoading ? <Loading/> : "Create Ticket"}
                 </Button>
               </form>
             </Modal>

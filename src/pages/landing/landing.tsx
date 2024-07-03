@@ -10,27 +10,30 @@ function Landing() {
 
   return (
     <HomeLayout>
-      <div className="flex flex-col justify-center items-center h-screen gap-3">
-        <div className="max-w-[500px]">
-          <img src={todoListImg} alt="todo list landing image" />
-        </div>
-        <h1 className="text-xl font-bold">
-          Welcome to the best ticketing system page
-        </h1>
-        {user ?
-          <Button
-            onClick={() => { navigate("/home") }}
-          >
-            Tickets Menu
-          </Button>
-        :
-          <Button
-            onClick={() => { navigate("/signup") }}
-            className="bg-red-500">
-            Sign up
-          </Button>
-        }
+      <div className="flex flex-col justify-center items-center min-h-screen">
+        <div className="flex flex-col items-center gap-3 max-w-[500px] px-5">
+          <div className="">
+            <img src={todoListImg} alt="todo list landing image" />
+          </div>
+          <h1 className="text-2xl font-bold font-mono text-center">
+            Welcome to the best ticketing system page
+          </h1>
+          {user ?
+            <Button
+              onClick={() => { navigate("/home") }}
+            >
+              Tickets Menu
+            </Button>
+            :
+            <Button
+              onClick={() => { navigate("/signup") }}
+              variant="clear"
+            >
+              Sign up
+            </Button>
+          }
 
+        </div>
       </div>
     </HomeLayout>
   )

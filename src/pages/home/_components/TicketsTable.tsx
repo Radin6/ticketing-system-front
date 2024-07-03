@@ -1,6 +1,9 @@
 import React from "react";
 import { TPriority, TStatus } from "../../../types/ticketTypes"
 import formatDate from "../../../utils/formatDate";
+import { MdDelete } from "react-icons/md";
+import { MdEditSquare } from "react-icons/md";
+
 
 export interface ITicketsTable {
   ticketId: string;
@@ -16,8 +19,8 @@ interface TicketsProps {
   tickets: ITicketsTable[];
 }
 
-const thStyle = "border border-gray-500 px-4"
-const tdStyle = "border border-gray-300 px-4"
+const thStyle = "border border-gray-500 px-4 text-nowrap text-ellipsis"
+const tdStyle = "border border-gray-300 px-4 text-nowrap text-ellipsis overflow-hidden max-w-[100px] md:max-w-[200px] lg:max-w-[400px]"
 
 const TicketsTable: React.FC<TicketsProps> = ({ tickets }) => {
   return (
@@ -39,6 +42,16 @@ const TicketsTable: React.FC<TicketsProps> = ({ tickets }) => {
             <td className={tdStyle}>{ticket.description}</td>
             <td className={tdStyle}>{ticket.status}</td>
             <td className={tdStyle}>{ticket.priority}</td>
+            <td>
+              <div className="flex">
+                <button>
+                  <MdEditSquare className="text-xl hover:text-green-600" />
+                </button>
+                <button>
+                  <MdDelete className="text-xl hover:text-green-600" />
+                </button>
+              </div>
+            </td>
           </tr>
         )}
       </tbody>
