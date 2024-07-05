@@ -16,7 +16,7 @@ interface IResponse200 {
   }
 }
 
-async function userSignup(data : ISignupData) : Promise<IResponse200 | string> {
+async function userSignup(data : ISignupData) : Promise<IResponse200 | object> {
   const { setUser } = useStoreUser();
   try {
     const response = await fetch(import.meta.env.VITE_URL_ENDPOINT+"/api/users/signup", {
@@ -43,7 +43,7 @@ async function userSignup(data : ISignupData) : Promise<IResponse200 | string> {
 
   } catch (error) {
     console.log("Error: ", error)
-    return "Something went wrong in fetch";
+    return {message: "Something went wrong in fetch"};
   }
 }
 

@@ -3,48 +3,67 @@ import Button from "../../components/Button";
 import Modal from "../../components/Modal";
 import { useEffect, useState } from "react";
 import ticketCreate from "../../services/tickets/ticketCreate"
-import { ITicketCreate, TPriority } from '../../types/ticketTypes';
+import ticketUpdate from "../../services/tickets/ticketUpdate"
+import { ITicketCreateEdit, TPriority, TStatus } from '../../types/ticketTypes';
 import getTicketsByMe from "../../services/tickets/getTicketsByMe";
 import TicketsTable, { ITicketsTable } from "./_components/TicketsTable";
 import Input from "../../components/Input";
 import Loading from "../../components/Loading";
+import ticketDelete from "../../services/tickets/ticketDelete";
 //import { TicketsMocks } from "../../mocks/TicketsMocks";
-
-// const CreateTicketModal = () => {
-//   <Modal setShowModal={setShowModal}>
-//     <table>1</table>
-//   </Modal>
-// }
 
 function Home() {
   const [showModal, setShowModal] = useState(false);
+
+  // CreateTicket states
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
-  const [priority, setPriority] = useState<TPriority|string>("")
+  const [priority, setPriority] = useState<TPriority>()
+
+  // EditTicket states
+  const [status, setStatus] = useState<TStatus>();
+  const [selectedTicketId, setSelectedTicketId] = useState("")
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+
   const [tickets, setTickets] = useState<ITicketsTable[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   useEffect(() => {
     const fetchTickets = async () => {
-      const response = await getTicketsByMe()
-      // setTickets(TicketsMocks)
-      if (response?.ticket) {
-        console.log(response.ticket)
-        setTickets(response.ticket)
+      try {
+        const response = await getTicketsByMe()
+
+        if (response?.ticket) {
+          setTickets(response.ticket)
+        }
+
+      } catch (error) {
+        console.log("Error fetch: ", error)
       }
     }
 
     fetchTickets()
-  }, [setTickets])
+  }, [isLoading])
 
   const handleOpenModal = () => {
     setShowModal(true)
   }
 
+  const handleReset = () => {
+    setTitle("")
+    setDescription("")
+    setPriority("low")
+    setStatus("open")
+    setSelectedTicketId("")
+    setShowModal(false);
+    setIsLoading(false);
+    setIsEditing(false);
+  }
+
   const handleCreateTicket = async (e: any) => {
     setIsLoading(true)
     e.preventDefault();
-    const ticketData: ITicketCreate = {
+    const ticketData: ITicketCreateEdit = {
       title: title,
       description: description,
       priority: priority
@@ -53,27 +72,65 @@ function Home() {
     const response = await ticketCreate(ticketData)
 
     console.log("creating ticket: ", response)
-    setTitle("")
-    setDescription("")
-    setPriority("low")
+    handleReset();
+  }
+
+  const handleClickEditTicket = (ticket: ITicketsTable) => {
+    setTitle(ticket.title);
+    setDescription(ticket.description);
+    setPriority(ticket.priority);
+    setStatus(ticket.status);
+    setSelectedTicketId(ticket.ticketId);
+    setIsEditing(true);
+    setShowModal(true);
+  }
+
+  const handleDeleteTicket = async (ticketId: string) => {
+    try {
+      const response = await ticketDelete(ticketId)
+      const filteredTickets = tickets.filter(ticket => ticket.ticketId !== ticketId)
+      setTickets(filteredTickets)
+      console.log(response)
+    } catch (error) {
+      console.log("Error on handle delete: ", error)
+    }
+
+  }
+
+  const handleEditTicket = async (e: any) => {
+    setIsLoading(true)
+    e.preventDefault();
+    const ticketData: ITicketCreateEdit = {
+      title: title,
+      description: description,
+      priority: priority,
+      status: status
+    }
+
+    const response = await ticketUpdate(ticketData, selectedTicketId);
+    console.log(response)
+    handleReset();
+  }
+
+  const handleOnClose = () => {
     setShowModal(false);
-    setIsLoading(false);
+    handleReset()
   }
 
   return (
     <HomeLayout>
       <div className="flex flex-col justify-center items-center h-screen">
         <div className="flex flex-col border rounded-md bg-blue-100 p-6 m-4 max-w-full">
-          {tickets?.length 
-            ? <TicketsTable tickets={tickets} /> 
+          {tickets?.length
+            ? <TicketsTable tickets={tickets} handleDeleteTicket={handleDeleteTicket} handleClickEditTicket={handleClickEditTicket} />
             : <Loading className="w-[300px] h-[150px]" />
           }
           <Button onClick={handleOpenModal}>
             Create New Ticket
           </Button>
           {showModal &&
-            <Modal setShowModal={setShowModal}>
-              <form className="flex flex-col my-2" onSubmit={handleCreateTicket}>
+            <Modal onClose={handleOnClose}>
+              <form className="flex flex-col my-2" onSubmit={isEditing ? handleEditTicket : handleCreateTicket}>
                 <label htmlFor="title" className="py-1">
                   Title
                 </label>
@@ -104,13 +161,28 @@ function Home() {
                   className="border px-2 py-1 rounded-md bg-slate-100"
                   required
                 >
-                  <option value="">Select an option</option>
                   <option value="low">Low</option>
                   <option value="medium">Medium</option>
                   <option value="high">High</option>
                 </select>
+                {isEditing && <>
+                  <label htmlFor="status" className="py-1">
+                    Status
+                  </label>
+                  <select
+                    onChange={(e) => setStatus(e.target.value)}
+                    value={status}
+                    id="status"
+                    className="border px-2 py-1 rounded-md bg-slate-100"
+                    required
+                  >
+                    <option value="open">Open</option>
+                    <option value="closed">Closed</option>
+                    <option value="in-progress">In-Progress</option>
+                  </select>
+                </>}
                 <Button type="submit" className="mt-6 mx-auto" disabled={isLoading}>
-                  {isLoading ? <Loading/> : "Create Ticket"}
+                  {isLoading ? <Loading /> : (isEditing ? "Update Ticket" : "Create Ticket")}
                 </Button>
               </form>
             </Modal>

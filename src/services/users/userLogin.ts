@@ -11,7 +11,7 @@ export interface IResponse200 {
   user: IUser
 }
 
-async function userLogin(data : ILoginData) : Promise<IResponse200 | string> {
+async function userLogin(data : ILoginData) : Promise<IResponse200 | object> {
 
   try {
     const response = await fetch(import.meta.env.VITE_URL_ENDPOINT+"/api/users/login", {
@@ -35,7 +35,7 @@ async function userLogin(data : ILoginData) : Promise<IResponse200 | string> {
 
   } catch (error) {
     console.log("Error: ", error)
-    return "Something went wrong in fetch";
+    return {message: "Something went wrong in fetch"}
   }
 }
 

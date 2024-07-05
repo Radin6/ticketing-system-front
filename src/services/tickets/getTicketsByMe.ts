@@ -17,7 +17,7 @@ async function getTicketsByMe() : Promise<any> {
 
   } catch(error) {
     console.log("Error: ", error);
-    return "Something went wrong trying to create a ticket"
+    return {message: "Something went wrong trying to create a ticket"}
   }
 }
 

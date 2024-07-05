@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
-import { ITicketCreate } from '../../types/ticketTypes';
+import { ITicketCreateEdit } from '../../types/ticketTypes';
 
-async function ticketCreate(ticketData : ITicketCreate) : Promise<any> {
+async function ticketCreate(ticketData : ITicketCreateEdit) : Promise<any> {
 
   try {
     const authToken = Cookies.get("token");
@@ -19,7 +19,7 @@ async function ticketCreate(ticketData : ITicketCreate) : Promise<any> {
 
   } catch(error) {
     console.log("Error: ", error);
-    return "Something went wrong trying to create a ticket"
+    return {message: "Something went wrong trying to create a ticket"}
   }
 }
 
