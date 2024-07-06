@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import userSignup from '../../services/users/userSignup'
-// import generateHash from '../../utils/generateHash'
 import { useNavigate } from "react-router-dom";
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import AuthLayout from '../../components/Layout/AuthLayout';
+import toast from 'react-hot-toast';
+// import generateHash from '../../utils/generateHash'
 
 function Signup() {
   const [username, setUsername] = useState<string>("")
@@ -20,14 +21,19 @@ function Signup() {
       password: password
       // password: generateHash(password)
     }
-    console.log("enviando: ", userData)
+
     const response = await userSignup(userData)
-    console.log(response)
 
-    if (response) {
-      setTimeout(() => navigate("/home"), 1000)
+    if ("user" in response) {
+      toast.loading("Signing up...")
+      setTimeout(() => {
+        toast.dismiss()
+        navigate("/home")
+      }
+      , 1000)
+    } else {
+      console.log(response);
     }
-
   }
 
   return (

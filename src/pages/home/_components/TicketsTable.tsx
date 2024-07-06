@@ -13,7 +13,7 @@ export interface ITicketsTable extends ITicketCreateEdit {
 interface TicketsProps {
   tickets: ITicketsTable[];
   handleDeleteTicket: (ticketId: string) => void;
-  handleClickEditTicket: (ticket: ITicketCreateEdit) => void;
+  handleClickEditTicket: (ticket: ITicketsTable) => void;
 }
 
 const thStyle = "border border-gray-500 px-4 text-nowrap text-ellipsis"

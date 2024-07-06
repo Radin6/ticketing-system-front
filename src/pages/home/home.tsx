@@ -10,23 +10,25 @@ import TicketsTable, { ITicketsTable } from "./_components/TicketsTable";
 import Input from "../../components/Input";
 import Loading from "../../components/Loading";
 import ticketDelete from "../../services/tickets/ticketDelete";
+import toast from "react-hot-toast";
 //import { TicketsMocks } from "../../mocks/TicketsMocks";
 
 function Home() {
   const [showModal, setShowModal] = useState(false);
 
   // CreateTicket states
-  const [title, setTitle] = useState("")
-  const [description, setDescription] = useState("")
-  const [priority, setPriority] = useState<TPriority>()
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [priority, setPriority] = useState<TPriority>();
 
-  // EditTicket states
+  // EditTicket extra states
   const [status, setStatus] = useState<TStatus>();
-  const [selectedTicketId, setSelectedTicketId] = useState("")
+  const [selectedTicketId, setSelectedTicketId] = useState<string>("");
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
-  const [tickets, setTickets] = useState<ITicketsTable[]>([])
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [tickets, setTickets] = useState<ITicketsTable[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [fetchTicketsTrigger, setFetchTicketsTrigger] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchTickets = async () => {
@@ -43,7 +45,7 @@ function Home() {
     }
 
     fetchTickets()
-  }, [isLoading])
+  }, [fetchTicketsTrigger])
 
   const handleOpenModal = () => {
     setShowModal(true)
@@ -71,7 +73,12 @@ function Home() {
 
     const response = await ticketCreate(ticketData)
 
-    console.log("creating ticket: ", response)
+    if (!response.message) {
+      toast.success("New ticket created")
+      setFetchTicketsTrigger(!fetchTicketsTrigger);
+    }
+
+    console.log(response)
     handleReset();
   }
 
@@ -86,15 +93,16 @@ function Home() {
   }
 
   const handleDeleteTicket = async (ticketId: string) => {
-    try {
-      const response = await ticketDelete(ticketId)
+
+    const response = await ticketDelete(ticketId)
+
+    if (!response.message) {
       const filteredTickets = tickets.filter(ticket => ticket.ticketId !== ticketId)
       setTickets(filteredTickets)
-      console.log(response)
-    } catch (error) {
-      console.log("Error on handle delete: ", error)
+      toast.success("Ticket has been deleted")
     }
-
+    
+    console.log(response)
   }
 
   const handleEditTicket = async (e: any) => {
@@ -108,6 +116,12 @@ function Home() {
     }
 
     const response = await ticketUpdate(ticketData, selectedTicketId);
+
+    if (!response.message) {
+      setFetchTicketsTrigger(!fetchTicketsTrigger);
+      toast.success("Ticket edited")
+    }
+
     console.log(response)
     handleReset();
   }
@@ -155,7 +169,7 @@ function Home() {
                   Priority
                 </label>
                 <select
-                  onChange={(e) => setPriority(e.target.value)}
+                  onChange={(e) => setPriority(e.target.value as TPriority)}
                   value={priority}
                   id="priority"
                   className="border px-2 py-1 rounded-md bg-slate-100"
@@ -170,7 +184,7 @@ function Home() {
                     Status
                   </label>
                   <select
-                    onChange={(e) => setStatus(e.target.value)}
+                    onChange={(e) => setStatus(e.target.value as TStatus)}
                     value={status}
                     id="status"
                     className="border px-2 py-1 rounded-md bg-slate-100"

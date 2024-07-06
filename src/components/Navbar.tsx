@@ -3,12 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { FaListCheck } from "react-icons/fa6";
 import { useStoreUser } from "../store/useStoreUser";
 import userLogout from "../services/users/userLogout";
+import toast from "react-hot-toast";
 
 function Navbar() {
   const { user, setUser } = useStoreUser();
   const navigate = useNavigate();
 
   const handleLogout = () => {
+    toast.success("Logged out");
     userLogout();
     navigate("/");
     setUser(null);

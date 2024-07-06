@@ -6,6 +6,7 @@ import { useStoreUser } from "../../store/useStoreUser"
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import AuthLayout from '../../components/Layout/AuthLayout';
+import toast from 'react-hot-toast';
 
 function Login() {
   const [email, setEmail] = useState<string>("")
@@ -22,12 +23,16 @@ function Login() {
     }
 
     const response = await userLogin(userData)
-    if (typeof response !== "string") {
-      setUser(response.user)
-    }
 
-    if (response) {
-      setTimeout(() => navigate("/home"), 1000)
+    if ("user" in response) {
+      setUser(response.user)
+      toast.loading("Logging in..")
+      setTimeout(() => {
+        navigate("/home")
+        toast.dismiss()
+      }, 1000)
+    } else {
+      console.log(response);
     }
 
   }

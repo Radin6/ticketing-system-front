@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie';
 import { useStoreUser } from '../../store/useStoreUser';
+import { IUserError } from '../../types/userTypes';
 
 interface ISignupData {
   name: string;
@@ -16,7 +17,7 @@ interface IResponse200 {
   }
 }
 
-async function userSignup(data : ISignupData) : Promise<IResponse200 | object> {
+async function userSignup(data : ISignupData) : Promise<IResponse200 | IUserError> {
   const { setUser } = useStoreUser();
   try {
     const response = await fetch(import.meta.env.VITE_URL_ENDPOINT+"/api/users/signup", {
@@ -43,7 +44,7 @@ async function userSignup(data : ISignupData) : Promise<IResponse200 | object> {
 
   } catch (error) {
     console.log("Error: ", error)
-    return {message: "Something went wrong in fetch"};
+    return {message: "Something went wrong in fetch"} as IUserError;
   }
 }
 
