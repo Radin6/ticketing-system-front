@@ -8,8 +8,8 @@ interface IHomeLayout {
 const HomeLayout: React.FC<IHomeLayout> = ({ children }) => {
   return (
     <main className="w-full h-full bg-beige">
+      <Navbar />
       <div className="max-w-[1200px] min-h-screen mx-auto">
-        <Navbar />
         {children}
       </div>
     </main>

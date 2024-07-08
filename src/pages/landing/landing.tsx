@@ -27,7 +27,7 @@ function Landing() {
             :
             <Button
               onClick={() => { navigate("/signup") }}
-              variant="clear"
+              variant="blue"
             >
               Sign up
             </Button>
