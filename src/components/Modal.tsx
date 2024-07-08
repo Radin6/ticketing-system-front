@@ -1,6 +1,5 @@
-import { string } from "prop-types";
 import Button from "./Button"
-import React, { ReactNode, useEffect, useRef } from "react";
+import React, { ReactNode } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
 import { useOutsideClick } from "../hooks/useClickOutside";
 
