@@ -40,8 +40,8 @@ function Login() {
   return (
     <AuthLayout>
       <section className="flex flex-col justify-center items-center h-screen">
-        <div className="flex flex-col border rounded-md bg-blue-100 p-6 shadow-lg">
-          <h1 className="text-xl text-center font-semibold">Login Page</h1>
+        <div className="flex flex-col border rounded-md bg-gradient-to-t from-green-500 to-green-600 p-6 shadow-lg">
+          <h1 className="text-xl text-center font-semibold text-white">Login Page</h1>
           <form className="flex flex-col my-2" onSubmit={handleLogin}>
             <label htmlFor="email" className="py-1">
               Email
@@ -68,7 +68,7 @@ function Login() {
             <Button 
               type="submit"
               className="mt-6 mx-auto"
-              variant="blue"
+              variant="green"
             >
               Login
             </Button>

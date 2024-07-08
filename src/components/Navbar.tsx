@@ -18,7 +18,7 @@ function Navbar() {
 
   return (
     <nav className="fixed flex w-full justify-between items-center p-3">
-      <div className="shadow-md shadow-gray-400 border-2 px-2 border-black rounded-full bg-yellow-500 hover:bg-slate-300 h-[50px]">
+      <div className="shadow-md shadow-gray-400 border-2 px-2 border-black rounded-full bg-yellow-500 hover:bg-yellow-600 h-[50px]">
         <FaListCheck onClick={() => { navigate("/") }} className="h-full text-3xl cursor-pointer" />
       </div>
       <div>

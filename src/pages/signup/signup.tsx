@@ -39,7 +39,7 @@ function Signup() {
   return (
     <AuthLayout>
       <section className="flex flex-col justify-center items-center h-screen">
-        <div className="flex flex-col border rounded-md bg-red-100 p-6 shadow-lg">
+        <div className="flex flex-col border rounded-md bg-gradient-to-t from-blue-200 to-blue-400 p-6 shadow-lg">
           <h1 className="text-xl text-center font-semibold">Signup Page</h1>
           <form className="flex flex-col my-2" onSubmit={handleSignup}>
             <label htmlFor="username" className="py-1">
@@ -72,7 +72,10 @@ function Signup() {
               id="password"
               required
             />
-            <Button type="submit" className="bg-red-500 mt-6 mx-auto">
+            <Button 
+              type="submit"
+              className="mt-6 mx-auto"
+              variant="blue">
               Signup
             </Button>
           </form>

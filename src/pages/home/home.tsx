@@ -11,6 +11,7 @@ import Input from "../../components/Input";
 import Loading from "../../components/Loading";
 import ticketDelete from "../../services/tickets/ticketDelete";
 import toast from "react-hot-toast";
+import TicketStats from "./_components/TicketStats";
 //import { TicketsMocks } from "../../mocks/TicketsMocks";
 
 function Home() {
@@ -101,7 +102,7 @@ function Home() {
       setTickets(filteredTickets)
       toast.success("Ticket has been deleted")
     }
-    
+
     console.log(response)
   }
 
@@ -135,10 +136,13 @@ function Home() {
     <HomeLayout>
       <div className="flex flex-col justify-center items-center h-screen">
         <div className="flex flex-col border rounded-md bg-blue-100 p-6 m-4 max-w-full">
-          {tickets?.length
-            ? <TicketsTable tickets={tickets} handleDeleteTicket={handleDeleteTicket} handleClickEditTicket={handleClickEditTicket} />
-            : <Loading className="w-[300px] h-[150px]" />
-          }
+          <div className="my-4">
+            <TicketStats total={tickets.length} />
+            {tickets?.length
+              ? <TicketsTable tickets={tickets} handleDeleteTicket={handleDeleteTicket} handleClickEditTicket={handleClickEditTicket} />
+              : <Loading className="w-[300px] h-[150px]" />
+            }
+          </div>
           <Button onClick={handleOpenModal}>
             Create New Ticket
           </Button>
