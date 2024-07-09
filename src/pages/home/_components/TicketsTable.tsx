@@ -16,9 +16,8 @@ interface TicketsProps {
 }
 
 const thStyle = "border border-gray-500 px-4 py-1 text-left text-nowrap";
-// Added py-2 to give some vertical padding
 const tdStyle = "border border-gray-300 px-4 py-1 text-ellipsis overflow-hidden text-nowrap";
-// Removed max-w and added overflow-hidden
+const tdStyleLong = "border border-gray-300 px-4 py-1 text-ellipsis overflow-hidden text-nowrap max-w-xs md:max-w-md lg:max-w-lg";
 
 const TicketsTable: React.FC<TicketsProps> = ({ tickets, handleDeleteTicket, handleClickEditTicket }) => {
   return (
@@ -28,7 +27,7 @@ const TicketsTable: React.FC<TicketsProps> = ({ tickets, handleDeleteTicket, han
           <tr>
             <th className={thStyle}>Created At</th>
             <th className={thStyle}>Title</th>
-            <th className={thStyle}>Description</th>
+            <th className={tdStyleLong}>Description</th>
             <th className={thStyle}>Status</th>
             <th className={thStyle}>Priority</th>
             <th className={thStyle}>Actions</th>
@@ -39,7 +38,7 @@ const TicketsTable: React.FC<TicketsProps> = ({ tickets, handleDeleteTicket, han
             <tr key={ticket.ticketId} className="hover:bg-blue-200">
               <td className={tdStyle}>{formatDate(ticket.createdAt)}</td>
               <td className={tdStyle}>{ticket.title}</td>
-              <td className={`${tdStyle} max-w-xs md:max-w-md lg:max-w-lg`}>{ticket.description}</td>
+              <td className={tdStyleLong}>{ticket.description}</td>
               <td className={tdStyle}>{ticket.status}</td>
               <td className={tdStyle}>{ticket.priority}</td>
               <td className={tdStyle}>

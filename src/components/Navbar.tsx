@@ -4,10 +4,12 @@ import { FaListCheck } from "react-icons/fa6";
 import { useStoreUser } from "../store/useStoreUser";
 import userLogout from "../services/users/userLogout";
 import toast from "react-hot-toast";
+import { useSidebar } from "../store/useSidebar";
 
 function Navbar() {
   const { user, setUser } = useStoreUser();
   const navigate = useNavigate();
+  const { isLeftsidebarOpen, setIsLeftsidebarOpen } = useSidebar()
 
   const handleLogout = () => {
     toast.success("Logged out");
@@ -16,10 +18,14 @@ function Navbar() {
     setUser(null);
   }
 
+  const handleOpenSidebar = () => {
+    setIsLeftsidebarOpen(!isLeftsidebarOpen);
+  };
+
   return (
     <nav className="fixed flex w-full justify-between items-center p-3">
-      <div className="shadow-md shadow-gray-400 border-2 px-2 border-black rounded-full bg-yellow-500 hover:bg-yellow-600 h-[50px]">
-        <FaListCheck onClick={() => { navigate("/") }} className="h-full text-3xl cursor-pointer" />
+      <div onClick={handleOpenSidebar} className="shadow-md shadow-gray-400 border-2 px-2 border-black rounded-full bg-yellow-500 hover:bg-yellow-600 h-[50px]">
+        <FaListCheck className="h-full text-3xl cursor-pointer" />
       </div>
       <div>
         {user ?
