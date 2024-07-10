@@ -27,6 +27,9 @@ function Home() {
   const [selectedTicketId, setSelectedTicketId] = useState<string>("");
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
+  // Ticket Expanded Info
+  const [ticketExpanded, setTicketExpanded] = useState<ITicketsTable>()
+
   const [tickets, setTickets] = useState<ITicketsTable[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [fetchTicketsTrigger, setFetchTicketsTrigger] = useState<boolean>(false);
@@ -138,8 +141,39 @@ function Home() {
         <div className="flex flex-col border rounded-md bg-blue-100 p-6 m-4 max-w-full">
           <div className="my-4">
             <TicketStats total={tickets.length} />
+            {ticketExpanded &&
+              <Modal onClose={() => setTicketExpanded()}>
+                <table className="m-9">
+                  <tr>
+                    <th className="px-5">Created AT</th>
+                    <td>{ticketExpanded.createdAt}</td>
+                  </tr>
+                  <tr>
+                    <th className="px-5">Title</th>
+                    <td>{ticketExpanded.title}</td>
+                  </tr>
+                  <tr>
+                    <th className="px-5">Description</th>
+                    <td>{ticketExpanded.description}</td>
+                  </tr>
+                  <tr>
+                    <th className="px-5">Status</th>
+                    <td>{ticketExpanded.status}</td>
+                  </tr>
+                  <tr>
+                    <th className="px-5">Priority</th>
+                    <td>{ticketExpanded.priority}</td>
+                  </tr>
+                </table>
+              </Modal>
+            }
             {tickets?.length
-              ? <TicketsTable tickets={tickets} handleDeleteTicket={handleDeleteTicket} handleClickEditTicket={handleClickEditTicket} />
+              ? <TicketsTable
+                tickets={tickets}
+                handleDeleteTicket={handleDeleteTicket}
+                handleClickEditTicket={handleClickEditTicket}
+                setTicketExpanded={setTicketExpanded}
+              />
               : <Loading className="w-[300px] h-[150px]" />
             }
           </div>
