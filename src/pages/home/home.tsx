@@ -1,171 +1,48 @@
 import HomeLayout from "../../components/Layout/HomeLayout";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
-import { useEffect, useState } from "react";
-import ticketCreate from "../../services/tickets/ticketCreate"
-import ticketUpdate from "../../services/tickets/ticketUpdate"
-import { ITicketCreateEdit, TPriority, TStatus } from '../../types/ticketTypes';
-import getTicketsByMe from "../../services/tickets/getTicketsByMe";
-import TicketsTable, { ITicketsTable } from "./_components/TicketsTable";
+import { TPriority, TStatus } from '../../types/ticketTypes';
+import TicketsTable from "./_components/TicketsTable";
 import Input from "../../components/Input";
 import Loading from "../../components/Loading";
-import ticketDelete from "../../services/tickets/ticketDelete";
-import toast from "react-hot-toast";
 import TicketStats from "./_components/TicketStats";
+import { ModalTicketExpanded } from "./_components/Modals"
+import useHomeLogic from "./useHomeLogic";
 //import { TicketsMocks } from "../../mocks/TicketsMocks";
 
 function Home() {
-  const [showModal, setShowModal] = useState(false);
-
-  // CreateTicket states
-  const [title, setTitle] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
-  const [priority, setPriority] = useState<TPriority>();
-
-  // EditTicket extra states
-  const [status, setStatus] = useState<TStatus>();
-  const [selectedTicketId, setSelectedTicketId] = useState<string>("");
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-
-  // Ticket Expanded Info
-  const [ticketExpanded, setTicketExpanded] = useState<ITicketsTable>()
-
-  const [tickets, setTickets] = useState<ITicketsTable[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [fetchTicketsTrigger, setFetchTicketsTrigger] = useState<boolean>(false);
-
-  useEffect(() => {
-    const fetchTickets = async () => {
-      try {
-        const response = await getTicketsByMe()
-
-        if (response?.ticket) {
-          setTickets(response.ticket)
-        }
-
-      } catch (error) {
-        console.log("Error fetch: ", error)
-      }
-    }
-
-    fetchTickets()
-  }, [fetchTicketsTrigger])
-
-  const handleOpenModal = () => {
-    setShowModal(true)
-  }
-
-  const handleReset = () => {
-    setTitle("")
-    setDescription("")
-    setPriority("low")
-    setStatus("open")
-    setSelectedTicketId("")
-    setShowModal(false);
-    setIsLoading(false);
-    setIsEditing(false);
-  }
-
-  const handleCreateTicket = async (e: any) => {
-    setIsLoading(true)
-    e.preventDefault();
-    const ticketData: ITicketCreateEdit = {
-      title: title,
-      description: description,
-      priority: priority
-    }
-
-    const response = await ticketCreate(ticketData)
-
-    if (!response.message) {
-      toast.success("New ticket created")
-      setFetchTicketsTrigger(!fetchTicketsTrigger);
-    }
-
-    console.log(response)
-    handleReset();
-  }
-
-  const handleClickEditTicket = (ticket: ITicketsTable) => {
-    setTitle(ticket.title);
-    setDescription(ticket.description);
-    setPriority(ticket.priority);
-    setStatus(ticket.status);
-    setSelectedTicketId(ticket.ticketId);
-    setIsEditing(true);
-    setShowModal(true);
-  }
-
-  const handleDeleteTicket = async (ticketId: string) => {
-
-    const response = await ticketDelete(ticketId)
-
-    if (!response.message) {
-      const filteredTickets = tickets.filter(ticket => ticket.ticketId !== ticketId)
-      setTickets(filteredTickets)
-      toast.success("Ticket has been deleted")
-    }
-
-    console.log(response)
-  }
-
-  const handleEditTicket = async (e: any) => {
-    setIsLoading(true)
-    e.preventDefault();
-    const ticketData: ITicketCreateEdit = {
-      title: title,
-      description: description,
-      priority: priority,
-      status: status
-    }
-
-    const response = await ticketUpdate(ticketData, selectedTicketId);
-
-    if (!response.message) {
-      setFetchTicketsTrigger(!fetchTicketsTrigger);
-      toast.success("Ticket edited")
-    }
-
-    console.log(response)
-    handleReset();
-  }
-
-  const handleOnClose = () => {
-    setShowModal(false);
-    handleReset()
-  }
+  const {
+    tickets,
+    isLoading,
+    showModal,
+    title,
+    setTitle,
+    description,
+    setDescription,
+    priority,
+    setPriority,
+    status,
+    setStatus,
+    isEditing,
+    ticketExpanded,
+    setTicketExpanded,
+    handleOpenModal,
+    handleClickEditTicket,
+    handleDeleteTicket,
+    handleEditTicket,
+    handleOnClose,
+    handleCreateTicket} = useHomeLogic();
 
   return (
     <HomeLayout>
       <div className="flex flex-col justify-center items-center h-screen">
-        <div className="flex flex-col border rounded-md bg-blue-100 p-6 m-4 max-w-full">
+        <div className="flex flex-col p-6 m-4 max-w-full">
           <div className="my-4">
             <TicketStats total={tickets.length} />
-            {ticketExpanded &&
-              <Modal onClose={() => setTicketExpanded()}>
-                <table className="m-9">
-                  <tr>
-                    <th className="px-5">Created AT</th>
-                    <td>{ticketExpanded.createdAt}</td>
-                  </tr>
-                  <tr>
-                    <th className="px-5">Title</th>
-                    <td>{ticketExpanded.title}</td>
-                  </tr>
-                  <tr>
-                    <th className="px-5">Description</th>
-                    <td>{ticketExpanded.description}</td>
-                  </tr>
-                  <tr>
-                    <th className="px-5">Status</th>
-                    <td>{ticketExpanded.status}</td>
-                  </tr>
-                  <tr>
-                    <th className="px-5">Priority</th>
-                    <td>{ticketExpanded.priority}</td>
-                  </tr>
-                </table>
-              </Modal>
+            {ticketExpanded && 
+              <ModalTicketExpanded
+                ticketExpanded={ticketExpanded} 
+                onClose={() => setTicketExpanded(null)} />
             }
             {tickets?.length
               ? <TicketsTable
@@ -177,7 +54,7 @@ function Home() {
               : <Loading className="w-[300px] h-[150px]" />
             }
           </div>
-          <Button onClick={handleOpenModal}>
+          <Button onClick={handleOpenModal} variant="green">
             Create New Ticket
           </Button>
           {showModal &&

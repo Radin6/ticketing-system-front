@@ -2,7 +2,6 @@ import React from "react";
 import { ITicketCreateEdit, TPriority, TStatus } from "../../../types/ticketTypes";
 import formatDate from "../../../utils/formatDate";
 import { MdDelete, MdEditSquare } from "react-icons/md";
-import Modal from "../../../components/Modal";
 
 export interface ITicketsTable extends ITicketCreateEdit {
   ticketId: string;
@@ -41,14 +40,14 @@ const ticketPriority = (priority: TPriority) => {
   )
 }
 
-const thStyle = "border border-gray-500 px-4 py-1 text-left text-nowrap";
-const tdStyle = "border border-gray-300 px-4 py-1 text-ellipsis overflow-hidden text-nowrap";
+const thStyle = "px-4 py-1 text-left text-nowrap";
+const tdStyle = "px-4 py-1 text-ellipsis overflow-hidden text-nowrap";
 
 const TicketsTable: React.FC<TicketsProps> = ({ tickets, handleDeleteTicket, handleClickEditTicket, setTicketExpanded }) => {
   return (
     <div className="overflow-x-auto">
-      <table className="w-full border-collapse bg-blue-50">
-        <thead className="bg-slate-300">
+      <table className="w-full border-collapse border outline outline-1 outline-transparent overflow-hidden bg-blue-50 rounded-md">
+        <thead className="bg-light-green text-green-100">
           <tr>
             <th className={thStyle}>Created At</th>
             <th className={thStyle}>Title</th>
@@ -60,7 +59,7 @@ const TicketsTable: React.FC<TicketsProps> = ({ tickets, handleDeleteTicket, han
         </thead>
         <tbody>
           {tickets.map(ticket => (
-            <tr key={ticket.ticketId} onClick={()=>{setTicketExpanded(ticket)}} className="hover:bg-blue-200">
+            <tr key={ticket.ticketId} onClick={()=>{setTicketExpanded(ticket)}} className="hover:bg-green-200 even:bg-slate-200">
               <td className={tdStyle}>{formatDate(ticket.createdAt)}</td>
               <td className={tdStyle+" max-w-[200px] lg:max-w-[250px]"}>{ticket.title}</td>
               <td className={tdStyle+" max-w-[200px] lg:max-w-[470px]"}>{ticket.description}</td>
@@ -68,11 +67,11 @@ const TicketsTable: React.FC<TicketsProps> = ({ tickets, handleDeleteTicket, han
               <td className={tdStyle}>{ticketPriority(ticket.priority)}</td>
               <td className={tdStyle}>
                 <div className="flex space-x-2">
-                  <button onClick={() => handleClickEditTicket(ticket)}>
-                    <MdEditSquare className="text-xl hover:text-blue-600" />
+                  <button onClick={(e) => {e.stopPropagation() ; handleClickEditTicket(ticket)}}>
+                    <MdEditSquare className="text-xl hover:text-green-600" />
                   </button>
-                  <button onClick={() => handleDeleteTicket(ticket.ticketId)}>
-                    <MdDelete className="text-xl hover:text-blue-600" />
+                  <button onClick={(e) => {e.stopPropagation() ; handleDeleteTicket(ticket.ticketId)}}>
+                    <MdDelete className="text-xl hover:text-green-600" />
                   </button>
                 </div>
               </td>
