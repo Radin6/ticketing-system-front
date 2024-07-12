@@ -11,7 +11,7 @@ function Landing() {
   return (
     <HomeLayout>
       <div className="flex flex-col justify-center items-center min-h-screen">
-        <div className="flex flex-col items-center gap-3 max-w-[500px] px-5">
+        <div className="flex flex-col items-center gap-3 max-w-[500px] px-5 mt-20">
           <div className="">
             <img src={todoListImg} alt="todo list landing image" />
           </div>

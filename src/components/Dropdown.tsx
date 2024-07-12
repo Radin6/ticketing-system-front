@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { useOutsideClick } from "../hooks/useClickOutside";
 import { useDoSort } from "../store/useDoSort";
 import { RiArrowDropDownLine } from "react-icons/ri";
-
+import { ISortOption } from "../constants/tickets";
 
 interface IDropdown {
-  children: React.ReactNode
+  children: React.ReactNode;
+  options: ISortOption[]
 }
 
-function Dropdown({ children }: IDropdown) {
+function Dropdown({ children, options }: IDropdown) {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const dropdownRef = useOutsideClick(() => {
     setIsOpen(false)
@@ -22,24 +23,9 @@ function Dropdown({ children }: IDropdown) {
 
   const liStyle = "hover:bg-slate-300 p-2"
 
-  const options = [
-    {
-      title: "By Status",
-      property: "status"
-    },
-    {
-      title: "By Priority",
-      property: "priority"
-    },
-    {
-      title: "More Recent",
-      property: "createdAt"
-    }
-  ]
-
   return (
     <div>
-      <button onClick={handleOpen} className=" flex items-center font-semibold px-2 py-1 border border-gray-300 rounded-lg bg-gray-200">
+      <button onClick={handleOpen} className=" flex items-center font-semibold px-2 py-1 border border-gray-300 rounded-lg bg-gray-200 whitespace-nowrap">
         {children}<RiArrowDropDownLine size={30}/>
       </button>
       {isOpen &&

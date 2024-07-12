@@ -10,6 +10,7 @@ import { TPriority, TStatus } from '../../types/ticketTypes';
 import Input from '../../components/Input';
 import ModalTicketExpanded from "./_components/ModalTicketExpanded";
 import { useDoSort } from "../../store/useDoSort";
+import { SORT_OPTIONS } from "../../constants/tickets";
 
 //import ModalsAll from "./_components/AllModals";
 //import { TicketsMocks } from "../../mocks/TicketsMocks";
@@ -47,7 +48,7 @@ function Home() {
           <div className="my-4">
             <div className="flex justify-between items-end my-4">
               <TicketStats total={tickets.length} />
-              <Dropdown>
+              <Dropdown options={SORT_OPTIONS}>
                 Sort By
               </Dropdown>
             </div>
