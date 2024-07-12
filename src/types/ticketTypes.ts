@@ -8,3 +8,5 @@ export interface ITicketCreateEdit {
 export type TPriority = "low" | "medium" | "high";
 
 export type TStatus = "open" | "closed" | "in-progress";
+
+export type TSortParameters = "priority" | "status" | "createdAt"

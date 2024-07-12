@@ -59,10 +59,10 @@ const TicketsTable: React.FC<TicketsProps> = ({ tickets, handleDeleteTicket, han
         </thead>
         <tbody>
           {tickets.map(ticket => (
-            <tr key={ticket.ticketId} onClick={()=>{setTicketExpanded(ticket)}} className="hover:bg-green-200 even:bg-slate-200">
+            <tr key={ticket.ticketId} onClick={()=>{setTicketExpanded(ticket)}} className="hover:bg-gray-300 even:bg-slate-200">
               <td className={tdStyle}>{formatDate(ticket.createdAt)}</td>
-              <td className={tdStyle+" max-w-[200px] lg:max-w-[250px]"}>{ticket.title}</td>
-              <td className={tdStyle+" max-w-[200px] lg:max-w-[470px]"}>{ticket.description}</td>
+              <td className={tdStyle+" w-[200px] lg:w-[250px]"}>{ticket.title}</td>
+              <td className={tdStyle+" w-[200px] lg:w-[470px]"}>{ticket.description}</td>
               <td className={tdStyle}>{ticketStatus(ticket.status)}</td>
               <td className={tdStyle}>{ticketPriority(ticket.priority)}</td>
               <td className={tdStyle}>

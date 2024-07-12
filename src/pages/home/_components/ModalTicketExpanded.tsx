@@ -7,7 +7,7 @@ interface IModalTicketExpanded {
   ticketExpanded: ITicketsTable
 }
 
-export const ModalTicketExpanded: React.FC<IModalTicketExpanded> = ({ onClose, ticketExpanded }) => {
+const ModalTicketExpanded: React.FC<IModalTicketExpanded> = ({ onClose, ticketExpanded }) => {
 
   return (
     <Modal onClose={onClose}>
@@ -37,6 +37,4 @@ export const ModalTicketExpanded: React.FC<IModalTicketExpanded> = ({ onClose, t
   )
 }
 
-export const ModalTicketEdit = () => {
-  return (<></>)
-}
+export default ModalTicketExpanded;

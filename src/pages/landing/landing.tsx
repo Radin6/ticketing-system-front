@@ -21,13 +21,14 @@ function Landing() {
           {user ?
             <Button
               onClick={() => { navigate("/home") }}
+              variant="green"
             >
               Tickets Menu
             </Button>
             :
             <Button
               onClick={() => { navigate("/signup") }}
-              variant="blue"
+              variant="green"
             >
               Sign up
             </Button>

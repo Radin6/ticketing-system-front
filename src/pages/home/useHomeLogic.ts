@@ -5,6 +5,7 @@ import ticketDelete from "../../services/tickets/ticketDelete";
 import getTicketsByMe from "../../services/tickets/getTicketsByMe";
 import { TPriority, TStatus, ITicketCreateEdit } from "../../types/ticketTypes";
 import { ITicketsTable } from "./_components/TicketsTable";
+import { useDoSort } from "../../store/useDoSort";
 import toast from "react-hot-toast";
 
 function useHomeLogic() {
@@ -26,6 +27,8 @@ function useHomeLogic() {
   const [tickets, setTickets] = useState<ITicketsTable[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [fetchTicketsTrigger, setFetchTicketsTrigger] = useState<boolean>(false);
+
+  const { doSort, setDoSort } = useDoSort()
 
   useEffect(() => {
     const fetchTickets = async () => {
@@ -128,6 +131,20 @@ function useHomeLogic() {
     handleReset()
   }
 
+  const handleSort = (tickets: ITicketsTable[]) => {
+    const sortKey = doSort as keyof ITicketsTable;
+
+    const ticketsSorted = tickets.sort((a,b) => {
+      if (a[sortKey] < b[sortKey]) return -1;
+      if (a[sortKey] > b[sortKey]) return 1;
+      return 0;
+    })
+
+    console.log("sorted: ", ticketsSorted)
+
+    return ticketsSorted;
+  }
+
   return {
     tickets,
     setTickets,
@@ -152,7 +169,10 @@ function useHomeLogic() {
     handleDeleteTicket,
     handleEditTicket,
     handleOnClose,
-    handleCreateTicket
+    handleCreateTicket,
+    doSort, 
+    setDoSort,
+    handleSort
   };
 }
 

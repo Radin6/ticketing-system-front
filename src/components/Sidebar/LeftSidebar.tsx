@@ -25,7 +25,7 @@ export function LeftSidebar() {
 
 
   return (
-    <div ref={modalRef} className={`fixed w-[200px] h-screen bg-amber-200 ease-in-out duration-300 ${isLeftsidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
+    <div ref={modalRef as React.RefObject<HTMLDivElement>} className={`fixed w-[200px] h-screen bg-amber-200 ease-in-out duration-300 ${isLeftsidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
       <ul className="my-24 mx-5">
       <li className={elementStyle} onClick={() => handleCLickElement("/", false)}>Landing</li>
         <li className={elementStyle} onClick={() => handleCLickElement("/home", true)}>Home</li>
