@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { useOutsideClick } from "../hooks/useClickOutside";
-import { useDoSort } from "../store/useDoSort";
+import { useOutsideClick } from "@/hooks/useClickOutside";
+import { useDoSort } from "@/store/useDoSort";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import { ISortOption } from "../constants/tickets";
+import { ISortOption } from "@/constants/tickets";
 
 interface IDropdown {
   children: React.ReactNode;

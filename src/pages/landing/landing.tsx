@@ -1,8 +1,8 @@
-import Button from "../../components/Button"
-import HomeLayout from "../../components/Layout/HomeLayout";
+import Button from "@/components/Button"
+import HomeLayout from "@/components/Layout/HomeLayout";
 import { useNavigate } from "react-router-dom";
-import todoListImg from "../../assets/todo-list.png"
-import { useStoreUser } from "../../store/useStoreUser";
+import todoListImg from "@/assets/todo-list.png"
+import { useStoreUser } from "@/store/useStoreUser";
 
 function Landing() {
   const navigate = useNavigate();

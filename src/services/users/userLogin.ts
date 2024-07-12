@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import { IUser, IUserError } from "../../types/userTypes";
+import { IUser, IUserError } from "@/types/userTypes";
 
 interface ILoginData {
   email: string;

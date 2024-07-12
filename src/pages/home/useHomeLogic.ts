@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import ticketCreate from "../../services/tickets/ticketCreate"
-import ticketUpdate from "../../services/tickets/ticketUpdate"
-import ticketDelete from "../../services/tickets/ticketDelete";
-import getTicketsByMe from "../../services/tickets/getTicketsByMe";
-import { TPriority, TStatus, ITicketCreateEdit } from "../../types/ticketTypes";
+import ticketCreate from "@/services/tickets/ticketCreate"
+import ticketUpdate from "@/services/tickets/ticketUpdate"
+import ticketDelete from "@/services/tickets/ticketDelete";
+import getTicketsByMe from "@/services/tickets/getTicketsByMe";
+import { TPriority, TStatus, ITicketCreateEdit } from "@/types/ticketTypes";
 import { ITicketsTable } from "./_components/TicketsTable";
-import { useDoSort } from "../../store/useDoSort";
+import { useDoSort } from "@/store/useDoSort";
 import toast from "react-hot-toast";
 
 function useHomeLogic() {

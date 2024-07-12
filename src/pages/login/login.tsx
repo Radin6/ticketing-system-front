@@ -1,11 +1,11 @@
 import { useState } from 'react';
 // import generateHash from '../../utils/generateHash';
-import userLogin from '../../services/users/userLogin';
+import userLogin from '@/services/users/userLogin';
 import { useNavigate } from "react-router-dom";
-import { useStoreUser } from "../../store/useStoreUser"
-import Input from '../../components/Input';
-import Button from '../../components/Button';
-import AuthLayout from '../../components/Layout/AuthLayout';
+import { useStoreUser } from "@/store/useStoreUser"
+import Input from '@/components/Input';
+import Button from '@/components/Button';
+import AuthLayout from '@/components/Layout/AuthLayout';
 import toast from 'react-hot-toast';
 
 function Login() {

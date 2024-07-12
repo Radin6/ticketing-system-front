@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import { ITicketCreateEdit } from "../../types/ticketTypes";
+import { ITicketCreateEdit } from "@/types/ticketTypes";
 
 async function ticketUpdate(ticketData: ITicketCreateEdit, selectedTicketId: string) : Promise<any> {
   try {

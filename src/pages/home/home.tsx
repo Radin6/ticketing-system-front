@@ -1,16 +1,16 @@
-import HomeLayout from "../../components/Layout/HomeLayout";
-import Button from "../../components/Button";
+import HomeLayout from "@/components/Layout/HomeLayout";
+import Button from "@/components/Button";
 import TicketsTable from "./_components/TicketsTable";
-import Loading from "../../components/Loading";
+import Loading from "@/components/Loading";
 import TicketStats from "./_components/TicketStats";
 import useHomeLogic from "./useHomeLogic";
-import Dropdown from "../../components/Dropdown";
-import Modal from '../../components/Modal';
-import { TPriority, TStatus } from '../../types/ticketTypes';
-import Input from '../../components/Input';
+import Dropdown from "@/components/Dropdown";
+import Modal from '@/components/Modal';
+import { TPriority, TStatus } from '@/types/ticketTypes';
+import Input from '@/components/Input';
 import ModalTicketExpanded from "./_components/ModalTicketExpanded";
-import { useDoSort } from "../../store/useDoSort";
-import { SORT_OPTIONS } from "../../constants/tickets";
+import { useDoSort } from "@/store/useDoSort";
+import { SORT_OPTIONS } from "@/constants/tickets";
 
 //import ModalsAll from "./_components/AllModals";
 //import { TicketsMocks } from "../../mocks/TicketsMocks";

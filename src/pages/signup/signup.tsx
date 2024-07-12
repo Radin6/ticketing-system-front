@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import userSignup from '../../services/users/userSignup'
+import userSignup from '@/services/users/userSignup'
 import { useNavigate } from "react-router-dom";
-import Input from '../../components/Input';
-import Button from '../../components/Button';
-import AuthLayout from '../../components/Layout/AuthLayout';
+import Input from '@/components/Input';
+import Button from '@/components/Button';
+import AuthLayout from '@/components/Layout/AuthLayout';
 import toast from 'react-hot-toast';
 // import generateHash from '../../utils/generateHash'
 

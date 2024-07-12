@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
-import { useStoreUser } from '../../store/useStoreUser';
-import { IUserError } from '../../types/userTypes';
+import { useStoreUser } from '@/store/useStoreUser';
+import { IUserError } from '@/types/userTypes';
 
 interface ISignupData {
   name: string;

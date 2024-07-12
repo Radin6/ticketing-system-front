@@ -1,10 +1,10 @@
 import Button from "./Button"
 import { useNavigate } from "react-router-dom";
 import { FaListCheck } from "react-icons/fa6";
-import { useStoreUser } from "../store/useStoreUser";
-import userLogout from "../services/users/userLogout";
+import { useStoreUser } from "@/store/useStoreUser";
+import userLogout from "@/services/users/userLogout";
 import toast from "react-hot-toast";
-import { useSidebar } from "../store/useSidebar";
+import { useSidebar } from "@/store/useSidebar";
 
 function Navbar() {
   const { user, setUser } = useStoreUser();
